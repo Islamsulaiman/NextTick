@@ -1,8 +1,36 @@
 class TasksController < ApplicationController
     before_action :set_task, only: [:show, :edit, :update, :destroy]
   
+
+    def create
+      @project = Project.find(params[:project_id])
+      @task = @project.tasks.create(task_params)
+      @task.status = :pending
+      @task.timer = TimerService.new
+      @task.save
+      redirect_to @project
+    end 
+
+    def start
+      @task = Task.find(params[:id])
+      @task.status = :in_progress
+      @task.timer.start
+      @task.save
+      redirect_to @task.project
+    end
+  
+    def stop
+      @task = Task.find(params[:id])
+      @task.status = :pending
+      @task.timer.stop
+      @task.save
+      redirect_to @task.project
+    end
+
+
     def index
       @tasks = Task.all
+      # @project = Task.where(project_id: @project.id)
     end
   
     def show
@@ -26,6 +54,8 @@ class TasksController < ApplicationController
     end
   
     def update
+      puts "inside update"
+      puts task_params[:name]
       if @task.update(task_params)
         redirect_to @task, notice: 'Task was successfully updated.'
       else
@@ -44,6 +74,6 @@ class TasksController < ApplicationController
       end
   
       def task_params
-        params.require(:task).permit(:name, :project_id, :status, :time_elapsed).merge(user_id: current_user.id)
+        params.require(:task).permit(:name, :project_id, :status, :time_elapsed)
       end
   end

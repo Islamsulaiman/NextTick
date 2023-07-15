@@ -1,0 +1,35 @@
+<%
+=begin%>
+ <h1><%= @project.name %></h1> 
+<%
+=end%>
+
+<h1></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>project id</th>
+      <th>Time elapsed</th>
+      <th>Time Spent</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.name %></td>
+        <td><%= task.project_id %></td>
+        <td><%= task.time_elapsed %></td>
+
+        <td><%= link_to 'Edit', edit_task_path(task) %></td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
