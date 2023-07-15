@@ -33,10 +33,25 @@ class CategoriesController < ApplicationController
       end
     end
   
+    # def destroy
+    #   @category.destroy
+    #   redirect_to categories_url, notice: 'Category was successfully destroyed.'
+    # end
+
+    # def destroy
+    #     @category.destroy
+    #     respond_to do |format|
+    #       format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
+    #       format.json { head :no_content }
+    #     end
+    #   end
+
     def destroy
-      @category.destroy
-      redirect_to categories_url, notice: 'Category was successfully destroyed.'
-    end
+        @category.destroy
+        respond_to do |format|
+          format.json { head :no_content }
+        end
+      end
   
     private
       def set_category
