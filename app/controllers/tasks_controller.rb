@@ -2,14 +2,14 @@ class TasksController < ApplicationController
     before_action :set_task, only: [:show, :edit, :update, :destroy]
   
 
-    def create
-      @project = Project.find(params[:project_id])
-      @task = @project.tasks.create(task_params)
-      @task.status = :pending
-      @task.timer = TimerService.new
-      @task.save
-      redirect_to @project
-    end 
+    # def create
+    #   @project = Project.find(params[:project_id])
+    #   @task = @project.tasks.create(task_params)
+    #   @task.status = :pending
+    #   @task.timer = TimerService.new
+    #   @task.save
+    #   redirect_to @project
+    # end 
 
     def start
       @task = Task.find(params[:id])
@@ -44,7 +44,18 @@ class TasksController < ApplicationController
     end
   
     def create
+
+      puts "inside"
+
+      # @project = Project.find(params[:project_id])
+      # @task = @project.tasks.create(task_params)
       @task = Task.new(task_params)
+      @task.status = :pending
+      @task.time_elapsed = 0
+      # @task.timer = TimerService.new
+
+
+      
   
       if @task.save
         redirect_to @task, notice: 'Task was successfully created.'

@@ -1,10 +1,5 @@
-<%
-=begin%>
- <h1><%= @project.name %></h1> 
-<%
-=end%>
+<!-- app/views/projects/show.html.erb -->
 
-<h1></h1>
 
 <table>
   <thead>
@@ -22,7 +17,9 @@
       <tr>
         <td><%= task.name %></td>
         <td><%= task.project_id %></td>
-        <td><%= task.time_elapsed %></td>
+        <td><span id="elapsed-time-<%= task.id %>"><%= task.time_elapsed %></span> seconds</td>
+
+        <td><button class="start-timer" data-task-id="<%= task.id %>" data-initial-time="<%= task.time_elapsed %>">Start Timer</button></td>
 
         <td><%= link_to 'Edit', edit_task_path(task) %></td>
 
@@ -33,3 +30,22 @@
 
 <br>
 <p><%= link_to 'New Task', new_task_path(@task) %></p>
+
+<script>
+  var timers = {};
+
+  document.querySelectorAll(".start-timer").forEach(function(button) {
+    button.addEventListener("click", function() {
+      var taskId = button.dataset.taskId;
+      var initialTime = button.dataset.initialTime;
+      var elapsedTime = initialTime;
+
+      timers[taskId] = setInterval(function() {
+        elapsedTime++;
+        document.getElementById("elapsed-time-" + taskId).textContent = elapsedTime;
+      }, 1000);
+
+      button.disabled = true;
+    });
+  });
+</script>
