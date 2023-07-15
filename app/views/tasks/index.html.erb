@@ -1,6 +1,5 @@
 <!-- app/views/projects/show.html.erb -->
 
-
 <table>
   <thead>
     <tr>
@@ -19,7 +18,10 @@
         <td><%= task.project_id %></td>
         <td><span id="elapsed-time-<%= task.id %>"><%= task.time_elapsed %></span> seconds</td>
 
-        <td><button class="start-timer" data-task-id="<%= task.id %>" data-initial-time="<%= task.time_elapsed %>">Start Timer</button></td>
+        <td>
+          <button class="start-timer" data-task-id="<%= task.id %>" data-initial-time="<%= task.time_elapsed %>">Start Timer</button>
+          <button class="stop-timer" data-task-id="<%= task.id %>" disabled>Stop Timer</button>
+        </td>
 
         <td><%= link_to 'Edit', edit_task_path(task) %></td>
 
@@ -32,20 +34,76 @@
 <p><%= link_to 'New Task', new_task_path(@task) %></p>
 
 <script>
+  var currentTimerId = null;
   var timers = {};
+  var elapsedTimes = {};
 
-  document.querySelectorAll(".start-timer").forEach(function(button) {
-    button.addEventListener("click", function() {
-      var taskId = button.dataset.taskId;
-      var initialTime = button.dataset.initialTime;
-      var elapsedTime = initialTime;
+  function stopTimer(taskId) {
+    if (!timers[taskId]) {
+      return;
+    }
 
+    clearInterval(timers[taskId]);
+    var startButton = document.querySelector("button.start-timer[data-task-id='" + taskId + "']");
+    startButton.disabled = false;
+    var stopButton = document.querySelector("button.stop-timer[data-task-id='" + taskId + "']");
+    stopButton.disabled = true;
+
+    var elapsedTime = elapsedTimes[taskId];
+    var taskEl = document.getElementById("elapsed-time-" + taskId);
+    taskEl.textContent = elapsedTime;
+
+    var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+    var url = "/tasks/" + taskId;
+
+    fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": csrfToken
+      },
+      body: JSON.stringify({ task: { time_elapsed: elapsedTime } })
+    })
+    .then(function(response) {
+      if (response.ok) {
+        console.log("Time elapsed updated successfully!");
+      } else {
+        console.error("Failed to update time elapsed.");
+      }
+    })
+    .catch(function(error) {
+      console.error("Failed to update time elapsed:", error);
+    });
+
+    currentTimerId = null;
+  }
+
+  document.querySelectorAll(".start-timer").forEach(function(startButton) {
+    var taskId = startButton.dataset.taskId;
+    var initialTime = startButton.dataset.initialTime;
+
+    startButton.addEventListener("click", function() {
+      if (currentTimerId) {
+        stopTimer(currentTimerId);
+      }
+
+      elapsedTimes[taskId] = parseInt(document.getElementById("elapsed-time-" + taskId).textContent || initialTime);
       timers[taskId] = setInterval(function() {
-        elapsedTime++;
-        document.getElementById("elapsed-time-" + taskId).textContent = elapsedTime;
+        elapsedTimes[taskId]++;
+        document.getElementById("elapsed-time-" + taskId).textContent = elapsedTimes[taskId];
+
+        // Enable the "Stop Timer" button if the counter is working
+        var stopButton = document.querySelector("button.stop-timer[data-task-id='" + taskId + "']");
+        stopButton.disabled = false;
       }, 1000);
 
-      button.disabled = true;
+      startButton.disabled = true;
+      currentTimerId = taskId;
+    });
+
+    var stopButton = startButton.nextElementSibling;
+    stopButton.addEventListener("click", function() {
+      stopTimer(taskId);
     });
   });
 </script>

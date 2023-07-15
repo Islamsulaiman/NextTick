@@ -42,21 +42,15 @@ class TasksController < ApplicationController
   
     def edit
     end
-  
+
+    
     def create
 
       puts "inside"
-
-      # @project = Project.find(params[:project_id])
-      # @task = @project.tasks.create(task_params)
       @task = Task.new(task_params)
       @task.status = :pending
       @task.time_elapsed = 0
-      # @task.timer = TimerService.new
 
-
-      
-  
       if @task.save
         redirect_to @task, notice: 'Task was successfully created.'
       else
