@@ -54,24 +54,40 @@ class ProjectsController < ApplicationController
     #     end
     #   end
 
-    def create
-        @project = Project.new(project_params)
-        @category = Category.find_by(id: params[:project][:category_id])
+    # def create
+    #     @project = Project.new(project_params)
+    #     # @category = Category.find_by(id: params[:project][:category_id])
       
-        if @category.nil?
-          flash[:error] = "Invalid category ID"
-          redirect_to new_project_path
-          return
-        end
+    #     if @category.nil?
+    #       flash[:error] = "Invalid category ID"
+    #       redirect_to new_project_path
+    #       return
+    #     end
       
-        @project.category = @category
+    #     @project.category = @category
       
-        if @project.save
-          redirect_to @project, notice: 'Project was successfully created.'
-        else
-          render :new
-        end
+    #     if @project.save
+    #       redirect_to @project, notice: 'Project was successfully created.'
+    #     else
+    #       render :new
+    #     end
+    #   end
+
+
+      # POST /projects or /projects.json
+  def create
+    @project = Project.new(project_params)
+    
+    respond_to do |format|
+      if @project.save
+        format.html { redirect_to project_url(@project), notice: "Project was successfully created." }
+        format.json { render :show, status: :created, location: @project }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
       end
+    end
+  end
 
   
     def update
@@ -93,6 +109,6 @@ class ProjectsController < ApplicationController
       end
   
       def project_params
-        params.require(:project).permit(:name, :user_id, :category_id)
+        params.require(:project).permit(:name, :user_id, :category_id).merge(user_id: current_user.id)
       end
   end

@@ -5,7 +5,8 @@
     <tr>
       <th>Name</th>
       <th>Category</th>
-      <th>Description</th>
+      <th>Edit</th>
+      <th>Delete</th>
 
     </tr>
   </thead>
@@ -13,6 +14,7 @@
     <% @projects.each do |project| %>
       <tr>
         
+        <td><%= project.name %></td>
         <td><%= project.category.name %></td>
         <td><%= link_to "Edit", edit_project_path(project) %></td>
         <td><%= link_to "Delete", project_path(project), method: :delete, data: { confirm: "Are you sure you want to delete this project?" } %></td>
