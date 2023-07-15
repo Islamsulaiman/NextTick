@@ -9,25 +9,70 @@ class ProjectsController < ApplicationController
     def show
     end
   
+    # def new
+    #     @category = Category.find_by(id: params[:category_id])
+    #   @project = Category.new
+    # end
+
     def new
-      @project = current_user.projects.build
-    end
-  
-    def edit
-    end
-  
-    def create
-        #link our newly created project with it's correspondin user
-      @project = current_user.projects.build(project_params)
-      
-      @project = current_user.projects.build(project_params)
-  
-      if @project.save
-        redirect_to @project, notice: 'Project was successfully created.'
-      else
-        render :new
+        @category = Category.find_by(id: params[:category_id])
+        @project = Project.new
       end
-    end
+
+
+    # def create
+    #     @project = Project.new(project_params)
+    #     @category = Category.find(params[:project][:category_id])
+      
+    #     @project.category = @category
+      
+    #     if @project.save
+    #     #   redirect_to @project
+    #       redirect_to @project, notice: 'Project was successfully created.'
+    #     else
+    #       render :new
+    #     end
+    #   end
+
+
+    # def create
+    #     @project = Project.new(project_params)
+    #     @category = Category.find_by(id: params[:project][:category_id])
+      
+    #     if @category.nil?
+    #       flash[:error] = "Invalid category ID"
+    #       redirect_to new_project_path
+    #       return
+    #     end
+      
+    #     @project.category = @category
+      
+    #     if @project.save
+    #       redirect_to @project, notice: 'Project was successfully created.'
+    #     else
+    #       render :new
+    #     end
+    #   end
+
+    def create
+        @project = Project.new(project_params)
+        @category = Category.find_by(id: params[:project][:category_id])
+      
+        if @category.nil?
+          flash[:error] = "Invalid category ID"
+          redirect_to new_project_path
+          return
+        end
+      
+        @project.category = @category
+      
+        if @project.save
+          redirect_to @project, notice: 'Project was successfully created.'
+        else
+          render :new
+        end
+      end
+
   
     def update
       if @project.update(project_params)

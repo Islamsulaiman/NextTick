@@ -1,0 +1,24 @@
+<h1>Edit Project</h1>
+
+<%= form_with(model: @project, url: project_path(@project), method: :patch) do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :category_id %>
+    <%= form.select :category_id, Category.all.collect {|c| [c.name, c.id]} %>
+  </div>
+
+  <div>
+   <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<p><%= link_to "Back to Project", project_path(@project) %></p>

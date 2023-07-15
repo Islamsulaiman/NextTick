@@ -1,0 +1,11 @@
+<h1><%= @project.name %></h1>
+
+<p><strong>Category:</strong> <%= @project.category.name %></p>
+
+<p><strong>Description:</strong> <%= @project.description %></p>
+
+<p><%= link_to "Edit", edit_project_path(@project) %></p>
+
+<p><%= link_to "Delete", project_path(@project), method: :delete, data: { confirm: "Are you sure you want to delete this project?" } %></p>
+
+<p><%= link_to "Back to Projects", projects_path %></p>
