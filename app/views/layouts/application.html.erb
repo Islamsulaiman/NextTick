@@ -14,7 +14,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="http://127.0.0.1:3000/">NextTick</a>
+    <a class="navbar-brand" href="http://127.0.0.1:3000/"><h3>NextTick</h3></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -22,17 +22,15 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
 
-
-      </ul>
-      <form class="d-flex">
+    
+  </ul>
         <% if user_signed_in? %> 
         <div> Welcome <%= current_user.email %> </div> 
-          <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
+        <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
         <% else %>
         <%= button_to "Sign in", new_user_session_path, class: "btn btn-outline-success" %>
 
         <% end %>
-      </form>
     </div>
   </div>
 </nav>

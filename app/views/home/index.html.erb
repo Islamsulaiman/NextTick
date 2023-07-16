@@ -1,11 +1,18 @@
 <% if user_signed_in? %> 
- <div> Welcome <%= current_user.email %> </div> 
+ <%
+=begin%>
+ <div> Welcome <%= current_user.email %> </div>  
+<%
+=end%>
   <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
 
   <div>
-  <div> Creat a category </div>
-  <div> Creat a project 
-      <p><%= link_to "Back to Projects", projects_path %></p>
+  <div> Creat a category 
+     <p><%= link_to "Creat a project", categories_path %></p>
+  
+  </div>
+  <div>  
+      <p><%= link_to "Creat a project", projects_path %></p>
   </div>
   <div> Creat Tasks </div>
  </div>
@@ -14,4 +21,3 @@
 
   <%= button_to "Sign in", new_user_session_path %> 
 <% end %>
-<h1>Hello User!</h1>
