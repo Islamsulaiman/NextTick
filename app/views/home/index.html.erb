@@ -1,24 +1,44 @@
 <% if user_signed_in? %> 
- <%
-=begin%>
- <div> Welcome <%= current_user.email %> </div>  
-<%
-=end%>
-  <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
 
-  <div>
-  <div>  
-     <p><%= link_to "Creat a category", categories_path %></p>
-  
-  </div>
-  <div>  
-      <p><%= link_to "Creat a project", projects_path %></p>
-  </div>
-  <div>  
-    <p><%= link_to "Creat Tasks", new_task_path %></p>
-  </div>
- </div>
 
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
+
+  <div style="margin-bottom: 2rem;">
+    <h1 style="text-align: center;">Don't lose track anymore!</h1>
+  </div>
+
+  <div class="card-container" style="display: flex; justify-content: center; gap: 1rem;">
+
+    <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+      <div class="card-header" style="text-align: center;"><h2>Category</h2></div>
+      <div class="card-body">
+        <h5 class="card-title">Category contains projects</h5>
+        <p class="card-text">You can create projects inside a category</p>
+        <%= link_to "Categories", categories_path, class: "btn btn-danger rounded-0 py-2 px-4 text-uppercase font-weight-bold position-relative overflow-hidden btn-hover", style: "text-align: center;" %>
+      </div>
+    </div>
+
+    <div class="card bg-light mb-3" style="max-width: 18rem;">
+      <div class="card-header" style="text-align: center;"><h2>Project</h2></div>
+      <div class="card-body">
+        <h5 class="card-title">Projects contain tasks</h5>
+        <p class="card-text">You can create tasks inside a project.</p>
+        <%= link_to "Projects", projects_path, class: "btn btn-danger rounded-0 py-2 px-4 text-uppercase font-weight-bold position-relative overflow-hidden btn-hover", style: "text-align: center;" %>
+      </div>
+    </div>
+
+    <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+      <div class="card-header" style="text-align: center;"><h2>Task</h2></div>
+      <div class="card-body">
+        <h5 class="card-title">Tasks belong to a project</h5>
+        <p class="card-text">Tasks will be grouped by project.</p>
+        <%= link_to 'Tasks', tasks_path(@task), class: "btn btn-danger rounded-0 py-2 px-4 text-uppercase font-weight-bold position-relative overflow-hidden btn-hover", style: "text-align: center;" %>
+      </div>
+    </div>
+
+  </div>
+
+</div>
 <% else %>
 
   <%= button_to "Sign in", new_user_session_path %> 
