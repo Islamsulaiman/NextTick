@@ -1,5 +1,14 @@
-<h1><%= @task.name %></h1>
 
-<p><strong>Due Date:</strong> <%= @task.time_elapsed %></p>
+    <div class="container mt-5">
+      <div class="jumbotron">
+        <h1 class="display-4"><%= @task.name %></h1>
 
-<p><%= link_to 'Back', tasks_path(@task) %></p>
+        <hr class="my-4">
+
+        <p class="lead"><strong>Due Date:</strong> <%= @task.time_elapsed %></p>
+
+        <hr class="my-4">
+
+        <%= link_to 'Back', tasks_path(@task), class: 'btn btn-secondary' %>
+      </div>
+    </div>

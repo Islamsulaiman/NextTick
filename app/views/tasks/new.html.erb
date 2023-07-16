@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<%
+=begin%>
+ <!DOCTYPE html>
 <html>
   <head>
     <title>New Task</title>
@@ -107,5 +109,187 @@
       <input type="submit" value="Create Task">
       <%= link_to 'Back', tasks_path(@project), class: 'btn btn-link' %>
     </form>
+  </body>
+</html> 
+<%
+=end%>
+
+<%
+=begin%>
+ <h1>New Task</h1>
+
+<%= form_for([@project, @task]) do |f| %>
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+        <% @task.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %>
+  </div>
+
+  <div class="field">
+    <%= f.label :due_date %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+<%= link_to 'Back', projects_path(@project) %> 
+<%
+=end%>
+
+
+<%
+=begin%>
+ <%= form_with(model: @task, url: tasks_path(@project)) do |form| %>
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+            <% @task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+      <%= form.label :name %>
+    <%= form.text_field :name, autofocus: true %>
+  </div>
+
+  <div>
+    <%= form.label :project_id %>
+    <%= form.select :project_id, Project.all.collect {|p| [p.name, p.id]} %>
+  </div>
+  <div class="actions">
+      <%= form.submit "Create Task" %>
+  </div>
+<% end %>
+<%= link_to 'Back', tasks_path(@project) %> 
+<%
+=end%>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Task</title>
+    <style>
+      /* Form styles */
+      form {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 1rem;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        border-radius: 0.2rem;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+
+      input[type="text"], select {
+        display: block;
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 0.2rem;
+        font-size: 1.2rem;
+      }
+
+      input[type="submit"] {
+        padding: 0.5rem;
+        border: none;
+        background-color: #4CAF50;
+        color: #fff;
+        cursor: pointer;
+        margin-right: 0.5rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-radius: 0.2rem;
+        transition: all 0.3s ease-in-out;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #3e8e41;
+        transform: translateY(-2px);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+      }
+
+      /* Error message styles */
+      #error_explanation {
+        color: #f44336;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+
+      #error_explanation ul {
+        margin-bottom: 0.5rem;
+      }
+
+      #error_explanation li {
+        list-style: circle;
+      }
+
+      /* Link styles */
+      a {
+        color: #4CAF50;
+        text-decoration: none;
+        transition: all 0.3s ease-in-out;
+      }
+
+      a:hover {
+        text-decoration: underline;
+        color: #3e8e41;
+      }
+
+    </style>
+  </head>
+  <body>
+    <%= form_with(model: @task, url: tasks_path(@project)) do |form| %>
+      <form>
+        <h1>New Task</h1>
+        <% if @task.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+            <ul>
+              <% @task.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <label for="task_name">Name</label>
+        <%= form.text_field :name, id: "task_name", autofocus: true %>
+
+        <label for="task_project_id">Project</label>
+        <%= form.select :project_id, Project.all.collect {|p| [p.name, p.id]}, {}, id: "task_project_id" %>
+
+        <input type="submit" value="Create Task">
+        <%= link_to 'Back', tasks_path(@project), class: 'btn btn-link' %>
+      </form>
+    <% end %>
   </body>
 </html>

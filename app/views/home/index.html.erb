@@ -7,14 +7,16 @@
   <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
 
   <div>
-  <div> Creat a category 
-     <p><%= link_to "Creat a project", categories_path %></p>
+  <div>  
+     <p><%= link_to "Creat a category", categories_path %></p>
   
   </div>
   <div>  
       <p><%= link_to "Creat a project", projects_path %></p>
   </div>
-  <div> Creat Tasks </div>
+  <div>  
+    <p><%= link_to "Creat Tasks", new_task_path %></p>
+  </div>
  </div>
 
 <% else %>

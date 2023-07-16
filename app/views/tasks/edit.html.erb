@@ -79,25 +79,27 @@
     </style>
   </head>
   <body>
-    <form>
-      <h1>Edit Task</h1>
-      <% if @task.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+    <%= form_for([@project, @task]) do |f| %>
+      <form>
+        <h1>Edit Task</h1>
+        <% if @task.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
 
-          <ul>
-            <% @task.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
+            <ul>
+              <% @task.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
 
-      <label for="task_name">Name</label>
-      <input type="text" id="task_name" name="task[name]" value="<%= @task.name %>" autofocus>
+        <label for="task_name">Name</label>
+        <%= f.text_field :name, id: "task_name" %>
 
-      <input type="submit" value="Update Task">
-      <%= link_to 'Back', projects_path(@project), class: 'btn btn-link' %>
-    </form>
+        <input type="submit" value="Update Task">
+        <%= link_to 'Back', projects_path(@project), class: 'btn btn-link' %>
+      </form>
+    <% end %>
   </body>
 </html>
