@@ -1,37 +1,130 @@
-<!-- app/views/projects/show.html.erb -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project Tasks</title>
+    <style>
+      /* Table styles */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1rem;
+      }
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>project id</th>
-      <th>Time elapsed</th>
-      <th>Time Spent</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+      th,
+      td {
+        padding: 0.5rem;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
 
-  <tbody>
-    <% @tasks.each do |task| %>
-      <tr>
-        <td><%= task.name %></td>
-        <td><%= task.project_id %></td>
-        <td><span id="elapsed-time-<%= task.id %>"><%= task.time_elapsed %></span> seconds</td>
+      th {
+        background-color: #f5f5f5;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
 
-        <td>
-          <button class="start-timer" data-task-id="<%= task.id %>" data-initial-time="<%= task.time_elapsed %>">Start Timer</button>
-          <button class="stop-timer" data-task-id="<%= task.id %>" disabled>Stop Timer</button>
-        </td>
+      /* Button styles */
+      button {
+        padding: 0.5rem;
+        border: none;
+        background-color: #4CAF50;
+        color: #fff;
+        cursor: pointer;
+        margin-right: 0.5rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-radius: 0.2rem;
+        transition: all 0.3s ease-in-out;
+      }
 
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
+      button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
 
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      button:hover:not(:disabled) {
+        background-color: #3e8e41;
+        transform: translateY(-2px);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+      }
 
-<br>
-<p><%= link_to 'New Task', new_task_path(@task) %></p>
+      /* Link styles */
+      a {
+        color: #4CAF50;
+        text-decoration: none;
+        transition: all 0.3s ease-in-out;
+      }
+
+      a:hover {
+        text-decoration: underline;
+        color: #3e8e41;
+      }
+
+      /* Container styles */
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+
+      /* Page title styles */
+      h1 {
+        margin-top: 0;
+        font-size: 3rem;
+        font-weight: bold;
+        text-align: center;
+        color: #4CAF50;
+        text-shadow: 2px 2px #ddd;
+        margin-bottom: 2rem;
+      }
+
+      /* Timer styles */
+      .timer {
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      .timer span {
+        color: #f44336;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Project Tasks</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Project ID</th>
+            <th>Time Elapsed</th>
+            <th>Actions</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tasks.each do |task| %>
+            <tr>
+              <td><%= task.name %></td>
+              <td><%= task.project_id %></td>
+              <td class="timer"><span id="elapsed-time-<%= task.id %>"><%= task.time_elapsed %></span> seconds</td>
+              <td>
+                <button class="start-timer" data-task-id="<%= task.id %>" data-initial-time="<%= task.time_elapsed %>">Start Timer</button>
+                <button class="stop-timer" data-task-id="<%= task.id %>" disabled>Stop Timer</button>
+              </td>
+              <td><%= link_to 'Edit', edit_task_path(task) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <p><%= link_to 'New Task', new_task_path(@task), class: 'btn btn-success' %></p>
+    </div>
+    <script>
+      /* JavaScript code here */
+    </script>
+  </body>
+</html>
 
 <script>
   var currentTimerId = null;
