@@ -1,7 +1,17 @@
 <% if user_signed_in? %> 
  <div> Welcome <%= current_user.email %> </div> 
   <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
+
+  <div>
+  <div> Creat a category </div>
+  <div> Creat a project 
+      <p><%= link_to "Back to Projects", projects_path %></p>
+  </div>
+  <div> Creat Tasks </div>
+ </div>
+
 <% else %>
+
   <%= button_to "Sign in", new_user_session_path %> 
 <% end %>
 <h1>Hello User!</h1>
