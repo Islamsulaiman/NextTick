@@ -13,26 +13,51 @@
   <body>
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="http://127.0.0.1:3000/"><h3>NextTick</h3></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <div class="container-fluid d-flex justify-content-between ">
+
+      <div>
+        <a class="navbar-brand" href="http://127.0.0.1:3000/">
+          <h3 style="margin: 0;">NextTick</h3>
+        </a>
+      </div>
+
+      <div>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <h4> Go anywhere</h4>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="#">            
+
+                  <%= link_to "Categories", categories_path, class: "btn btn-danger rounded-0 py-2 px-4 text-uppercase font-weight-bold position-relative overflow-hidden btn-hover" %>
+
+            </a></li>
+            <li><a class="dropdown-item" href="#">
+            
+                <%= link_to "Projects", projects_path, class: "btn btn-danger rounded-0 py-2 px-4 text-uppercase font-weight-bold position-relative overflow-hidden btn-hover" %>
 
 
-    
-  </ul>
-        <% if user_signed_in? %> 
-        <div> Welcome <%= current_user.email %> </div> 
-        <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
+            </a></li>
+            <li><a class="dropdown-item" href="#">
+
+            <%= link_to 'Tasks', tasks_path(@task), class: "btn btn-danger rounded-0 py-2 px-4 text-uppercase font-weight-bold position-relative overflow-hidden btn-hover" %>
+            
+            </a></li>
+          </ul>
+        </li>
+      </div>
+
+      <div class="d-flex justify-content-end align-items-center">
+        <% if user_signed_in? %>
+          <div class="me-3">Welcome <%= current_user.email %></div>
+          <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
         <% else %>
-        <%= button_to "Sign in", new_user_session_path, class: "btn btn-outline-success" %>
-
+          <%= button_to "Sign in", new_user_session_path, class: "btn btn-outline-success me-3" %>
+          <%= button_to "Sign up", new_user_registration_path, class: "btn btn-outline-primary" %>
         <% end %>
+      </div>
+
     </div>
-  </div>
 </nav>
 
 
