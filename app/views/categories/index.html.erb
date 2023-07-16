@@ -1,20 +1,23 @@
-<h3>Categories</h3>
-<table class="table table-striped table-hover" style="max-width: 800px; margin: 0 auto;">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th class="text-right">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @categories.each do |category| %>
-      <tr>
-        <td><%= category.name %></td>
-        <td class="text-right">
-          <%= link_to "Edit", edit_category_path(category), class: "btn btn-primary btn-sm mr-1" %>
-          <%= link_to "Delete", category_path(category), method: :delete, data: { confirm: "Are you sure you want to delete this category?" }, class: "btn btn-danger btn-sm", remote: true %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+
+    <div style="max-width: 800px; margin: 0 auto;">
+      <h3>Categories</h3>
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @categories.each do |category| %>
+            <tr>
+              <td><%= category.name %></td>
+              <td class="text-right">
+                <a href="<%= edit_category_path(category) %>" class="btn btn-primary btn-sm mr-1">Edit</a>
+                <%= link_to "Delete", category_path(category), method: :delete, data: { confirm: "Are you sure you want to delete this category?" }, class: "btn btn-danger btn-sm", remote: true %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
