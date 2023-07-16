@@ -1,19 +1,108 @@
-<h1>Edit Project</h1>
+<h1 class="text-center mt-5 mb-4" style="font-family: 'Montserrat', sans-serif;">Edit Project</h1>
 
-<%= form_with(model: @project, url: project_path(@project), method: :patch) do |form| %>
-  <div>
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+<div class="container py-5">
+  <%= form_with(model: @project, url: project_path(@project), method: :patch) do |form| %>
+    <div class="form-group">
+      <%= form.label :name, class: "font-weight-bold" %>
+      <%= form.text_field :name, class: "form-control rounded-0", placeholder: "Enter project name" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :category_id, class: "font-weight-bold" %>
+      <%= form.select :category_id, Category.all.collect {|c| [c.name, c.id]}, {}, { class: "form-control rounded-0" } %>
+    </div>
+
+    <div class="form-group text-center">
+      <%= form.submit "Update Project", class: "btn btn-danger rounded-0 py-2 px-4 text-uppercase font-weight-bold position-relative overflow-hidden" %>
+    </div>
+  <% end %>
+
+  <div class="text-center">
+    <%= link_to "Back to Project", project_path(@project), class: "btn btn-danger rounded-0 py-2 px-4 text-uppercase font-weight-bold position-relative overflow-hidden btn-hover" %>
   </div>
+</div>
 
-  <div>
-    <%= form.label :category_id %>
-    <%= form.select :category_id, Category.all.collect {|c| [c.name, c.id]} %>
-  </div>
+<style>
+  /* Custom button styles */
+  .btn-danger {
+    background-color: #f44336;
+    border-color: #f44336;
+  }
 
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+  .btn-danger:hover {
+    background-color: #e53935;
+    border-color: #e53935;
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  }
 
-<p><%= link_to "Back to Project", project_path(@project) %></p>
+  .btn-danger:focus {
+    box-shadow: none;
+  }
+
+  .btn-danger span {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .btn-danger:hover span:last-child {
+    transform: rotate(45deg) translateX(100%);
+  }
+
+  .btn-danger:hover span:first-child {
+    transform: rotate(-45deg) translateX(100%);
+  }
+
+  /* Custom hover effect for "Back to Project" button */
+  .btn-hover {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-hover:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 100%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, opacity 0.3s;
+    opacity: 0;
+  }
+
+  .btn-hover:hover:before {
+    width: 200%;
+    height: 200%;
+    opacity: 1;
+  }
+
+  /* Custom form styles */
+  input[type="text"], select {
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    background-color: transparent;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  input[type="text"]:focus, select:focus {
+    outline: none;
+    border-color: #f44336;
+    box-shadow: none;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  /* Custom font for headings and labels */
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+</style>
