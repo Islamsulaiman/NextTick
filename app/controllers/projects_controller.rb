@@ -8,70 +8,11 @@ class ProjectsController < ApplicationController
   
     def show
     end
-  
-    # def new
-    #     @category = Category.find_by(id: params[:category_id])
-    #   @project = Category.new
-    # end
 
     def new
         @category = Category.find_by(id: params[:category_id])
         @project = Project.new
-      end
-
-
-    # def create
-    #     @project = Project.new(project_params)
-    #     @category = Category.find(params[:project][:category_id])
-      
-    #     @project.category = @category
-      
-    #     if @project.save
-    #     #   redirect_to @project
-    #       redirect_to @project, notice: 'Project was successfully created.'
-    #     else
-    #       render :new
-    #     end
-    #   end
-
-
-    # def create
-    #     @project = Project.new(project_params)
-    #     @category = Category.find_by(id: params[:project][:category_id])
-      
-    #     if @category.nil?
-    #       flash[:error] = "Invalid category ID"
-    #       redirect_to new_project_path
-    #       return
-    #     end
-      
-    #     @project.category = @category
-      
-    #     if @project.save
-    #       redirect_to @project, notice: 'Project was successfully created.'
-    #     else
-    #       render :new
-    #     end
-    #   end
-
-    # def create
-    #     @project = Project.new(project_params)
-    #     # @category = Category.find_by(id: params[:project][:category_id])
-      
-    #     if @category.nil?
-    #       flash[:error] = "Invalid category ID"
-    #       redirect_to new_project_path
-    #       return
-    #     end
-      
-    #     @project.category = @category
-      
-    #     if @project.save
-    #       redirect_to @project, notice: 'Project was successfully created.'
-    #     else
-    #       render :new
-    #     end
-    #   end
+    end
 
 
       # POST /projects or /projects.json
