@@ -32,26 +32,20 @@ class CategoriesController < ApplicationController
         render :edit
       end
     end
-  
-    # def destroy
-    #   @category.destroy
-    #   redirect_to categories_url, notice: 'Category was successfully destroyed.'
-    # end
-
-    # def destroy
-    #     @category.destroy
-    #     respond_to do |format|
-    #       format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
-    #       format.json { head :no_content }
-    #     end
-    #   end
 
     def destroy
+      @category = Category.find(params[:id])
+      
+      if @category.projects.exists?
+        flash[:alert] = "Cannot delete category with associated projects."
+        puts "Dont delete category"
+        redirect_to categories_path(@category)
+      else
         @category.destroy
-        respond_to do |format|
-          format.json { head :no_content }
-        end
+        redirect_to categories_path, notice: "Category was successfully destroyed."
       end
+    end
+
   
     private
       def set_category
