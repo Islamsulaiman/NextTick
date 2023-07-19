@@ -20,7 +20,7 @@ class CategoriesController < ApplicationController
       @category = Category.new(category_params)
   
       if @category.save
-        redirect_to @category, notice: 'Category was successfully created.'
+        redirect_to @category, notice: 'Category was successfully created.',  status: :created
       else
         render :new
       end
