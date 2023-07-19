@@ -1,6 +1,7 @@
 # spec/controllers/categories_controller_spec.rb
 require 'rails_helper'
 
+#test categories route
 RSpec.describe "Test Categories routes", type: :request do
 
   describe 'GET #index' do
@@ -14,6 +15,7 @@ RSpec.describe "Test Categories routes", type: :request do
 
   describe 'POST /categories' do
 
+    #create new post
     it 'creates a new category' do
       user = User.create(email: "user@example.com", password: "password")
       sign_in user
@@ -27,28 +29,10 @@ RSpec.describe "Test Categories routes", type: :request do
       }.to change(Category, :count).by(1)
 
       expect(response).to have_http_status(:created)
-
     end
-
-    # it 'returns the created category' do
-    #   category_params = { name: 'New Category' }
-
-    #   post '/categories', params: { category: category_params }
-    #   created_category = Category.last
-
-    #   expect(response).to have_http_status(:created)
-    #   expect(response.body).to eq(created_category.to_json)
-    # end
-
-    # it 'returns unprocessable_entity status for invalid category' do
-    #   category_params = { name: '' } # Invalid category without a name
-
-    #   post '/categories', params: { category: category_params }
-
-    #   expect(response).to have_http_status(:unprocessable_entity)
-    # end
-
   end
+
+
 
 
 end
