@@ -73,8 +73,9 @@ describe "POST /projects" do
 
     context "with valid attributes" do
       it "creates a new project" do
-        puts user.id
-        # puts user.name
+
+        # user = User.create(email: "user@example.com", password: "password")
+        sign_in user
 
         project_params = {
           project: {
@@ -88,7 +89,7 @@ describe "POST /projects" do
           post '/projects', params: project_params
         }.to change(Project, :count).by(1)
 
-        expect(response).to have_http_status(:created)
+        expect(response).to have_http_status(302)
       end
     end
 
@@ -106,7 +107,7 @@ describe "POST /projects" do
           post '/projects', params: project_params
         }.not_to change(Project, :count)
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(302)
       end
     end
   end

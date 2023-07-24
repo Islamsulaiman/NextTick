@@ -16,7 +16,7 @@
 if ENV['COV']
   require 'simplecov'
   SimpleCov.start('rails') do
-    add_group 'Services', 'app/services'
+    add_group 'Services', 'app/services'  # for magdy's folder
   end
 end
 
