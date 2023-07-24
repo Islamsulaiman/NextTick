@@ -14,58 +14,7 @@ RSpec.describe "Test projects routes", type: :request do
     end
   end
 
-#   describe 'POST #create' do
-#     context 'with valid attributes' do
-
-#           it 'creates a new project' do
-#             user = User.create(email: "user@example.com", password: "password")
-#             sign_in user
-    
-#             category = FactoryBot.create(:category) # Create a Category record using FactoryBot
-    
-#             project_params = {
-#               project: {
-#                 name: 'New Project', # Invalid project name (empty)
-#                 user_id: user.id,
-#                 category_id: category.id
-#               }
-#             }
-    
-#             expect {
-#               post '/projects', params: project_params # Use 'post' for request type
-#             }.to change(Project, :count).by(1)
-    
-#             expect(response).to have_http_status(:created)
-#           end
-    
-
-#     end
-
-#     context 'with invalid attributes' do
-#       it 'does not create a new project' do
-#         user = User.create(email: "user@example.com", password: "password")
-#         sign_in user
-
-#         category = FactoryBot.create(:category) # Create a Category record using FactoryBot
-
-#         project_params = {
-#           project: {
-#             name: '', # Invalid project name (empty)
-#             user_id: user.id,
-#             category_id: category.id
-#           }
-#         }
-
-#         expect {
-#           post '/projects', params: project_params # Use 'post' for request type
-#         }.not_to change(Project, :count)
-
-#         expect(response).to have_http_status(:unprocessable_entity)
-#       end
-#     end
-#   end
-
-describe "POST /projects" do
+  describe "POST /projects" do
     let(:user) { FactoryBot.create(:user) }
     let(:category) { FactoryBot.create(:category) }
 
@@ -74,7 +23,6 @@ describe "POST /projects" do
     context "with valid attributes" do
       it "creates a new project" do
 
-        # user = User.create(email: "user@example.com", password: "password")
         sign_in user
 
         project_params = {
@@ -105,7 +53,7 @@ describe "POST /projects" do
 
         expect {
           post '/projects', params: project_params
-        }.not_to change(Project, :count)
+        }.to change(Project, :count).by(0)
 
         expect(response).to have_http_status(302)
       end
