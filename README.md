@@ -22,3 +22,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+# Gems installed
+## 1. flay 
+### it's responsible for checking the code base for any code smells, we can run it on the whole application by using the following command "flay NextTick" from the root
