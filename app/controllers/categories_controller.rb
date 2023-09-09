@@ -20,7 +20,9 @@ class CategoriesController < ApplicationController
       @category = Category.new(category_params)
   
       if @category.save
-        redirect_to @category, notice: 'Category was successfully created.',  status: :created
+        flash[:success] = "Great! Your category has been created!"
+        puts "new category"
+        redirect_to @category
       else
         render :new
       end
@@ -30,6 +32,7 @@ class CategoriesController < ApplicationController
       if @category.update(category_params)
         redirect_to @category, notice: 'Category was successfully updated.'
       else
+        flash.now[:error] = "Rats! Fix your mistakes, please."
         render :edit
       end
     end
